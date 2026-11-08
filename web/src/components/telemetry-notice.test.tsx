@@ -18,7 +18,7 @@ import { TelemetryNotice } from "./telemetry-notice";
 // The one-time install-count notice (M86 spec 02): shown once on the dashboard while the count is on
 // by default, gone when it is off, gone for good once dismissed.
 
-const BODY = "Collie 1.27.0 sends anonymous telemetry once a day. Turn it off in Settings.";
+const BODY = "Collie sends anonymous telemetry once a day. Turn it off in Settings.";
 const UPDATE_BODY =
   "Collie's daily count now also names a dialog it could not read, by a short code made from the dialog's key hints, never from your text.";
 const DOCS = "https://colliepwa.dev/docs/security#what-leaves-your-machine";

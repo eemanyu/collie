@@ -23,6 +23,10 @@ Running a crew? Update the lead first; members follow on their own. Details:
 
 ## [Unreleased]
 
+### Changed
+
+- **The telemetry notice names no release, and the Voice row fits.** The one-time notice now reads "Collie sends anonymous telemetry once a day", so a device on a newer release is not told an older number, and Settings' Voice blurb no longer truncates on a narrow phone.
+
 ## [1.28.0] - 2026-11-06
 
 ### Added
