@@ -285,11 +285,8 @@ for (const harness of ["pi", "omp"] as const) {
           const loadOlder = page.getByRole("button", { name: message("chat.scrollback.loadOlder"), exact: true });
           await expect(loadOlder).toBeAttached({ timeout: 20_000 });
           await loadOlder.scrollIntoViewIfNeeded();
-          const pin = page.getByRole("button", { name: new RegExp(`^${message("chat.pin.label")}:`) });
           const row = await loadOlder.boundingBox();
-          const pinBox = (await pin.isVisible().catch(() => false)) ? await pin.boundingBox() : null;
-          const covered = row !== null && pinBox !== null && pinBox.y < row.y + row.height && row.y < pinBox.y + pinBox.height;
-          // Nothing covers the row's centre: the tap lands on the Load older button itself.
+          // The tap lands on the Load older button itself.
           const hit =
             row === null
               ? "no box"
@@ -298,7 +295,7 @@ for (const harness of ["pi", "omp"] as const) {
                   const button = el?.closest("button");
                   return button === null || button === undefined ? (el?.tagName ?? "nothing") : (button.textContent ?? "").trim().slice(0, 40);
                 }, [row.x + row.width / 2, row.y + row.height / 2]);
-          trail.notes.push(`pin ${pinBox === null ? "not shown" : "shown"}${covered ? ", OVER the Load older row" : ""}; a tap at the row's centre lands on "${hit}"`);
+          trail.notes.push(`a tap at the row's centre lands on "${hit}"`);
           const before = await page.locator("[data-block]").count();
           await loadOlder.tap({ timeout: 5000 });
           const grew = await expect
@@ -308,16 +305,7 @@ for (const harness of ["pi", "omp"] as const) {
             .catch(() => false);
           trail.captures.push(await capture(page, `${harness}-5-load-older`));
           trail.notes.push(grew ? "an older page loaded" : "no older page loaded");
-          // The row stays free afterwards: when more older turns remain the Load older row is still there,
-          // and the pin, shown now that the reader is below the first prompt, must not sit over it.
-          await page.waitForTimeout(500);
-          const rowAgain = (await loadOlder.count()) > 0;
-          if (rowAgain) await loadOlder.scrollIntoViewIfNeeded().catch(() => undefined);
-          const rowBox = rowAgain ? await loadOlder.boundingBox() : null;
-          const pinNow = (await pin.isVisible().catch(() => false)) ? await pin.boundingBox() : null;
-          const coveredAfter = rowBox !== null && pinNow !== null && pinNow.y < rowBox.y + rowBox.height && rowBox.y < pinNow.y + pinNow.height;
-          trail.notes.push(`after the tap: pin ${pinNow === null ? "not shown" : "shown"}, Load older row ${rowAgain ? (coveredAfter ? "covered by the pin" : "clear of the pin") : "gone (no older turns left)"}`);
-          return { verdict: !covered && !coveredAfter && hit.includes(message("chat.scrollback.loadOlder")) && grew ? "pass" : "fail", taps: 1, minTaps: 1, note: trail.notes.join("; "), captures: trail.captures };
+          return { verdict: hit.includes(message("chat.scrollback.loadOlder")) && grew ? "pass" : "fail", taps: 1, minTaps: 1, note: trail.notes.join("; "), captures: trail.captures };
         } finally {
           await context.close();
         }

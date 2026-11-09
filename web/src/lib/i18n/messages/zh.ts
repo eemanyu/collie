@@ -661,8 +661,6 @@ export const zh: Dictionary = {
   "chat.stream.working": "仍在处理…",
   "chat.stream.questionPending": "终端中有一个提问正在等待。您的下一条消息将用于回答该提问。",
   "chat.stream.queued": "等待发送",
-  "chat.pin.label": "你的提问",
-  "chat.pin.earlier": "提问在更早的记录里 · 加载更早记录",
   "chat.stream.sendNow": "立即发送",
   "chat.stream.sendNowAria": "立即发送，等待中的消息",
   "chat.stream.queuedWaits": "等待本轮结束。",

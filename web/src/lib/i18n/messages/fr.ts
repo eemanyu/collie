@@ -606,8 +606,6 @@ export const fr: Dictionary = {
   "chat.stream.working": "Toujours en cours…",
   "chat.stream.questionPending": "Une question est en attente dans le terminal. Votre prochain message y répond.",
   "chat.stream.queued": "En attente d'envoi",
-  "chat.pin.label": "Votre message",
-  "chat.pin.earlier": "La question est plus haut · Charger plus ancien",
   "chat.stream.sendNow": "Envoyer maintenant",
   "chat.stream.sendNowAria": "Envoyer maintenant, les messages en attente",
   "chat.stream.queuedWaits": "Attend la fin du tour.",

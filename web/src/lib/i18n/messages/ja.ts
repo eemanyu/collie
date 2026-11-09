@@ -671,8 +671,6 @@ export const ja: Dictionary = {
   "chat.stream.working": "処理中…",
   "chat.stream.questionPending": "ターミナルで質問への回答を待機しています。次のメッセージが回答になります。",
   "chat.stream.queued": "送信待ち",
-  "chat.pin.label": "あなたのプロンプト",
-  "chat.pin.earlier": "プロンプトはさらに前です · 過去のログを読み込む",
   "chat.stream.sendNow": "今すぐ送信",
   "chat.stream.sendNowAria": "今すぐ送信、待機中のメッセージ",
   "chat.stream.queuedWaits": "ターンの終了を待っています。",

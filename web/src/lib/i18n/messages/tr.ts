@@ -606,8 +606,6 @@ export const tr: Dictionary = {
   "chat.stream.working": "Hâlâ çalışıyor…",
   "chat.stream.questionPending": "Uçbirimde bir soru bekliyor. Bir sonraki iletiniz bu soruyu yanıtlar.",
   "chat.stream.queued": "Göndermek için bekleniyor",
-  "chat.pin.label": "İsteminiz",
-  "chat.pin.earlier": "Soru daha geride · Daha eskileri yükle",
   "chat.stream.sendNow": "Şimdi gönder",
   "chat.stream.sendNowAria": "Şimdi gönder, bekleyen mesajlar",
   "chat.stream.queuedWaits": "Turun bitmesini bekliyor.",

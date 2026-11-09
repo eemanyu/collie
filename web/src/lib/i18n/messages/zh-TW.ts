@@ -660,8 +660,6 @@ export const zhTW: Dictionary = {
   "chat.stream.working": "仍在處理…",
   "chat.stream.questionPending": "終端機中有一個等待回答的問題。你的下一則訊息將作為回答。",
   "chat.stream.queued": "等待傳送",
-  "chat.pin.label": "你的提問",
-  "chat.pin.earlier": "提問在更早的紀錄裡 · 載入較早記錄",
   "chat.stream.sendNow": "立即傳送",
   "chat.stream.sendNowAria": "立即傳送，等待中的訊息",
   "chat.stream.queuedWaits": "等待本輪結束。",

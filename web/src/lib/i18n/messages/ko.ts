@@ -672,8 +672,6 @@ export const ko: Dictionary = {
   "chat.stream.working": "계속 작업 중…",
   "chat.stream.questionPending": "터미널에서 질문에 대한 답변을 기다리고 있습니다. 다음 메시지는 이 질문의 답변으로 전달됩니다.",
   "chat.stream.queued": "전송 대기 중",
-  "chat.pin.label": "내 프롬프트",
-  "chat.pin.earlier": "프롬프트는 더 이전에 있습니다 · 이전 로그 불러오기",
   "chat.stream.sendNow": "지금 보내기",
   "chat.stream.sendNowAria": "지금 보내기, 대기 중인 메시지",
   "chat.stream.queuedWaits": "턴이 끝나기를 기다립니다.",

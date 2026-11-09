@@ -741,8 +741,6 @@ export const en = {
   "chat.stream.working": "Still working…",
   "chat.stream.questionPending": "A question is waiting in the terminal. Your next message answers it.",
   "chat.stream.queued": "Waiting to send",
-  "chat.pin.label": "Your prompt",
-  "chat.pin.earlier": "Asked further back · Load older",
   "chat.stream.sendNow": "Send now",
   "chat.stream.sendNowAria": "Send now, the waiting messages",
   "chat.stream.queuedWaits": "Waits for the turn to end.",

@@ -614,8 +614,6 @@ export const ru: Dictionary = {
   "chat.stream.working": "Выполняется…",
   "chat.stream.questionPending": "В терминале ожидает вопрос. Ваше следующее сообщение ответит на него.",
   "chat.stream.queued": "Ожидание отправки",
-  "chat.pin.label": "Ваш запрос",
-  "chat.pin.earlier": "Запрос был раньше · Загрузить более старые",
   "chat.stream.sendNow": "Отправить сейчас",
   "chat.stream.sendNowAria": "Отправить сейчас, ожидающие сообщения",
   "chat.stream.queuedWaits": "Ждет конца хода.",

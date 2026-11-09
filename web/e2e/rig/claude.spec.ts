@@ -268,9 +268,7 @@ test.describe("claude", () => {
       const lastPrompt = asJsonObject(cold.lastPrompt);
       const reported = lastPrompt !== undefined && !upserts.some((row) => row.uuid === lastPrompt.uuid);
       // Since the six-prompt pages (1.23.0) the last prompt sits on the first page by construction, so
-      // the case checks the Load older row itself: attached, nothing covers its centre, a tap adds older
-      // rows, and the pin leaves the row free before and after. (A reported pin, 3f522a27, now needs one
-      // turn of more than 400 rows.)
+      // the case checks the Load older row itself: attached, a tap at its centre adds older rows.
       // A FRESH context: the phone holds no history of this session, so its thread is the newest page.
       const context = await phoneContext(browser, rig, PHONE);
       const page = await context.newPage();
@@ -288,11 +286,7 @@ test.describe("claude", () => {
         // The reader at the very top, where the row is.
         await loadOlder.scrollIntoViewIfNeeded();
         await page.waitForTimeout(800);
-        const pin = page.getByRole("button", { name: new RegExp(`^${message("chat.pin.label")}:`) });
-        const pinShown = await pin.isVisible().catch(() => false);
         const row = await loadOlder.boundingBox();
-        const pinBox = pinShown ? await pin.boundingBox() : null;
-        const covered = row !== null && pinBox !== null && pinBox.y < row.y + row.height && row.y < pinBox.y + pinBox.height;
         const hit =
           row === null
             ? "no box"
@@ -301,7 +295,7 @@ test.describe("claude", () => {
                 const button = el?.closest("button");
                 return button === null || button === undefined ? (el?.tagName ?? "nothing") : (button.textContent ?? "").trim().slice(0, 40);
               }, [row.x + row.width / 2, row.y + row.height / 2]);
-        notes.push(`pin ${pinShown ? "shown" : "not shown"}${covered ? ", OVER the Load older row" : ""}; a tap at the row's centre lands on "${hit}"`);
+        notes.push(`a tap at the row's centre lands on "${hit}"`);
         const before = await page.locator("[data-block]").count();
         const shotBefore = await capture(page, "claude-5-load-older-before");
         const t0 = Date.now();
@@ -314,17 +308,8 @@ test.describe("claude", () => {
           .catch(() => false);
         const after = await page.locator("[data-block]").count();
         notes.push(`older read ${olderReads.length === 0 ? "never sent" : `answered ${olderReads.join(",")}`}; thread blocks ${String(before)} -> ${String(after)}`);
-        // The row stays free afterwards: when more older turns remain the Load older row is still there,
-        // and the pin, shown now that the reader is below the first prompt, must not sit over it.
-        await page.waitForTimeout(500);
-        const rowAgain = (await loadOlder.count()) > 0;
-        if (rowAgain) await loadOlder.scrollIntoViewIfNeeded().catch(() => undefined);
-        const rowBox = rowAgain ? await loadOlder.boundingBox() : null;
-        const pinNow = (await pin.isVisible().catch(() => false)) ? await pin.boundingBox() : null;
-        const coveredAfter = rowBox !== null && pinNow !== null && pinNow.y < rowBox.y + rowBox.height && rowBox.y < pinNow.y + pinNow.height;
-        notes.push(`after the tap: pin ${pinNow === null ? "not shown" : "shown"}, Load older row ${rowAgain ? (coveredAfter ? "covered by the pin" : "clear of the pin") : "gone (no older turns left)"}`);
         const shotAfter = await capture(page, "claude-5-load-older-after");
-        const verdict = !covered && !coveredAfter && hit.includes(message("chat.scrollback.loadOlder")) && olderReads.includes(200) && grew ? "pass" : "fail";
+        const verdict = hit.includes(message("chat.scrollback.loadOlder")) && olderReads.includes(200) && grew ? "pass" : "fail";
         return { verdict, taps: 1, minTaps: 1, note: notes.join("; "), taps_log: log, captures: [shotBefore, shotAfter] };
       } finally {
         await context.close();

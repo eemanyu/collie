@@ -4987,59 +4987,6 @@ describe("AgentChat: the header line of a durable pane (M53 spec 12)", () => {
 });
 
 
-// M53 spec 12: the prompt pin (PR 406) under the two-line header. The pin is an overlay hung from the top
-// edge of the thread's own scrollport, so with the progress row and both strips gone on a durable pane it
-// sits right under the header's rule: inside the thread's box, never in the header, and over nothing but the
-// thread. jsdom lays nothing out, so each block gets a 100px row and the reader has scrolled 150px.
-describe("AgentChat: the prompt pin under a durable pane's header line", () => {
-  afterEach(() => vi.restoreAllMocks());
-
-  it("header line: the pin hangs from the thread's top edge, under the header, with no strip or progress row between", async () => {
-    server.use(
-      http.get("/api/config", () =>
-        HttpResponse.json({
-          push: false,
-          vapidPublicKey: "",
-          mux: { name: "reference", capabilities: { paneGrid: false }, unsupportedKeys: [], notes: {} },
-        }),
-      ),
-    );
-    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
-      if (!this.hasAttribute("data-block")) return DOMRect.fromRect({ x: 0, y: 0, width: 390, height: 600 });
-      const index = [...(this.parentElement?.querySelectorAll(":scope > [data-block]") ?? [])].indexOf(this);
-      return DOMRect.fromRect({ x: 0, y: index * 100 - 150, width: 390, height: 100 });
-    });
-    const agent: AgentView = {
-      ...fixtureAgents[0]!,
-      hasSession: true,
-      status: "working",
-      subtitle: "a customer cannot log in",
-      progress: { kind: "steps", steps: [{ label: "look it up", state: "running" }, { label: "reply", state: "todo" }] },
-    };
-    const sibling: AgentView = { ...agent, paneId: "w1:p7" };
-    const { container } = renderChat({ agent, agents: [agent, sibling], tabs: fixtureTabs });
-    await waitFor(() => expect(screen.queryByRole("navigation", { name: "Panes" })).toBeNull());
-    const pin = await waitFor(() => {
-      const found = container.querySelector<HTMLElement>('[data-slot="prompt-pin"]');
-      expect(found).not.toBeNull();
-      return found!;
-    });
-    expect(pin).toHaveTextContent("what changed today?");
-    // Never in the header: the header holds the title and the one line under it.
-    const header = container.querySelector("header")!;
-    expect(header.contains(pin)).toBe(false);
-    expect(container.querySelector('[data-slot="pane-place"]')).toHaveTextContent("Step 1 of 2: look it up");
-    // Hung from the scrollport's own top edge: the overlay is the scroller's sibling, at top 0.
-    const overlay = pin.parentElement!;
-    expect(overlay).toHaveClass("absolute", "top-0");
-    expect(overlay.previousElementSibling).toHaveClass("overflow-y-auto");
-    // And nothing stands between the header and that edge: no strip, no progress row, no bar.
-    expect(screen.queryByRole("navigation", { name: "Tabs" })).toBeNull();
-    expect(container.querySelector('[data-slot="pane-progress"]')).toBeNull();
-    expect(container.querySelector('[role="progressbar"]')).toBeNull();
-  });
-});
-
 // ── A PICTURE PI SHOWS REACHES THE LIVE MIRROR (M39, #292) ──────────────────────────────────────────
 // pi draws a picture by direct placement, which leaves no placeholder cell, so the placeholder path
 // never fires for it. The mirror reads the newest finished turn's picture from the journal instead

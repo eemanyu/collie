@@ -606,8 +606,6 @@ export const pt: Dictionary = {
   "chat.stream.working": "Ainda trabalhando…",
   "chat.stream.questionPending": "Uma pergunta está aguardando no terminal. Sua próxima mensagem a responde.",
   "chat.stream.queued": "Aguardando para enviar",
-  "chat.pin.label": "Sua mensagem",
-  "chat.pin.earlier": "A pergunta está mais atrás · Carregar anteriores",
   "chat.stream.sendNow": "Enviar agora",
   "chat.stream.sendNowAria": "Enviar agora, as mensagens em espera",
   "chat.stream.queuedWaits": "Aguarda o fim do turno.",
