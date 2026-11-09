@@ -4053,7 +4053,7 @@
   "oc--slash-palette.txt": {
    "harness": "opencode",
    "version": "unversioned",
-   "state": "dialog"
+   "state": "draft"
   },
   "oc--update-available.txt": {
    "harness": "opencode",

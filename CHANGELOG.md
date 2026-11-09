@@ -27,6 +27,10 @@ Running a crew? Update the lead first; members follow on their own. Details:
 
 - **The telemetry notice names no release, and the Voice row fits.** The one-time notice now reads "Collie sends anonymous telemetry once a day", so a device on a newer release is not told an older number, and Settings' Voice blurb no longer truncates on a narrow phone.
 
+### Fixed
+
+- **A slash command in opencode no longer reads as a screen Collie cannot read.** opencode 2.2.6 paints its command palette as closed `┃ … ┃` rows right over the composer's bare top edge, and the profile took those rows for the composer's own, climbed past the edge and refused every send with "Collie cannot read this screen". The palette's rows are now told apart from the box's, so the box is found and the command goes out.
+
 ## [1.28.0] - 2026-11-06
 
 ### Added
